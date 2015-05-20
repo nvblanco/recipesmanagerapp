@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="col-md-8 text-center">
+
+    <button type="button" class="btn btn-success btn-block"
+            onclick="window.location.href='/newcategory'">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add new category
+    </button>
+    <br>
+
+    <table class="table table-striped">
+        {% for category in categories %}
+        <tr>
+            <td class="col-md-6">
+                <h3>{{category.name}}</h3>
+
+                <h3>
+                    <small>{{category.description}}</small>
+                </h3>
+                <hr width="50%">
+                <button class="btn btn-default" value="Detail"
+                        onclick="window.location.href='/allrecipes?category-filter={{category.key.urlsafe()}}'">
+                    Recipes
+                </button>
+                <button class="btn btn-warning" value="Edit"
+                        onclick="window.location.href='/editcategory?category_id={{category.key.urlsafe()}}'">
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
+                </button>
+                <button class="btn btn-danger" value="Delete"
+                        onclick="ShowConfirmYesNo('Are you sure to delete that category?\nAll recipes in this category will be deleted too',function(){window.location.href='/delete?category_id={{category.key.urlsafe()}}'})">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove
+                </button>
+            </td>
+            <td class="col-md-2">
+                {% if category.image %}
+                <img class="img-rounded img-responsive img-allrecipes"
+                     src="/image?category_id={{category.key.urlsafe()}}">
+                {% else %}
+                <img class="img-rounded img-responsive img-allrecipes" src="/resources/no-image.jpg">
+                {% endif %}
+            </td>
+        </tr>
+        {% else %}
+        <div class="row">
+            <h2>No items</h2>
+            <p>Create your first category now</p>
+        </div>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

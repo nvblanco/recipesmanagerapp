@@ -1,0 +1,15 @@
+.img-allrecipes{
+    width: 200px;
+    height: 200px;
+    vertical-align: middle !important;
+}
+
+.img-recipedetail{
+    width: 250px;
+    height: 250px;
+    vertical-align: middle !important;
+}
+
+.recipe-title{
+    vertical-align: middle !important;
+}

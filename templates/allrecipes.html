@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="col-md-8 text-center">
+
+    {% if error %}
+    <div class="alert alert-danger" role="alert">{{error}}</div>
+    {% endif %}
+
+    <button type="button" class="btn btn-success btn-block"
+            onclick="window.location.href='/newrecipe'">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add new recipe
+    </button>
+    <br>
+
+    <table class="table table-striped">
+        {% for recipe in recipes %}
+        <tr>
+            <td class="col-md-6">
+                <h3>{{recipe.name}}</h3>
+
+                <h3>
+                    <small>{{recipe.category.name}}</small>
+                </h3>
+                <hr width="50%">
+                <button class="btn btn-default" value="Detail"
+                        onclick="window.location.href='/recipe?id={{recipe.key.urlsafe()}}'">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Detail
+                </button>
+                <button class="btn btn-warning" value="Edit"
+                        onclick="window.location.href='/editrecipe?recipe_id={{recipe.key.urlsafe()}}'">
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
+                </button>
+                <button class="btn btn-danger" value="Delete"
+                        onclick="ShowConfirmYesNo('Are you sure to delete that item?',function(){window.location.href='/delete?recipe_id={{recipe.key.urlsafe()}}'})">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove
+                </button>
+            </td>
+            <td class="col-md-2">
+                {% if recipe.image %}
+                <img class="img-rounded img-responsive img-allrecipes" src="/image?recipe_id={{recipe.key.urlsafe()}}">
+                {% else %}
+                <img class="img-rounded img-responsive img-allrecipes" src="/resources/no-image.jpg">
+                {% endif %}
+            </td>
+        </tr>
+
+        {% else %}
+            <div class="row">
+                <h2>No items</h2>
+                <p>Create your first recipe now</p>
+            </div>
+        {% endfor %}
+
+    </table>
+</div>
+{% endblock %}
